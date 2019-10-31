@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Axios -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <title>Dogs and Cats</title>
+  <style>
+    img {
+      width: 300px;
+      height: 300px;
+    }
+  </style>
+</head>
+<body>
+  <h1>댕댕이</h1>
+  <button id="get-dog-btn">댕댕이 내놔!</button>
+  <button id="get-cat-btn">고양이 내놔!</button>
+  <div class="animals"></div>
+
+  <script>
+    // 댕댕이 API URL
+    const DOG_API_URL = 'https://dog.ceo/api/breeds/image/random'
+    const dogBtn = document.querySelector('#get-dog-btn')
+    const getDogImage = function(){
+      // Axios 를 통해 댕댕이 사진을 달라는 요청을 보낸다.
+      axios.get(DOG_API_URL)  
+     // 요청 도착하면 함수를 실행
+        .then(function(response){
+          // 댕댕이 이미지 url 을 꺼낸다
+          const imageUrl = response.data.message
+          // 댕댕이 이미지를 화면에 표현하기 위한 image tag 생성
+          const dogImage = document.createElement('img')
+          dogImage.src = imageUrl
+          dogImage.alt = 'dog'
+
+        // div.animals 안에 댕댕이 이미지 태그 push
+          const animalsList = document.querySelector('div.animals')
+          animalsList.appendChild(dogImage)
+      })
+    }
+    dogBtn.addEventListener('click', function(){
+      getDogImage()
+    })
+
+    const CAT_API_URL = 'https://api.thecatapi.com/v1/images/search'
+    const catBtn = document.querySelector('#get-cat-btn')
+    const getCatImage = function(){
+      axios.get(CAT_API_URL)
+        .then(function(response){
+          const caturl = response.data[0].url
+          const catImage = document.createElement('img')
+          catImage.src = caturl
+          catImage.alt = 'cat'
+          const animalsList = document.querySelector('div.animals')
+          animalsList.appendChild(catImage)
+        })
+    }
+    catBtn.addEventListener('click', function(){
+      getCatImage()
+    })
+  </script>
+</body>
+</html>

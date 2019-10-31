@@ -18,6 +18,7 @@
     const button = document.querySelector('button')
     button.addEventListener('click', ()=>{
       const item = document.querySelector('input').value
+      document.querySelector('input').value = ''
       if (item !== ""){
         const newItem = document.createElement('li')
         newItem.innerText = item + "  "
